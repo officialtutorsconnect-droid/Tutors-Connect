@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tutors Connect – IGCSE Tutors in UAE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #111827;
+      background-color: #f3f4f6;
+      line-height: 1.6;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* HEADER / NAV */
+
+    header {
+      background: #111827;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .nav-tab {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav-tab-active {
+      background: #f9fafb;
+      color: #111827;
+      font-weight: 600;
+    }
+
+    /* HERO */
+
+    .hero {
+      background: linear-gradient(135deg, #4f46e5, #6366f1);
+      color: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero h1 {
+      font-size: 2.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-tagline {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      max-width: 520px;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-highlight {
+      font-weight: 600;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+    }
+
+    .hero-badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.3);
+      border: 1px solid rgba(249, 250, 251, 0.4);
+    }
+
+    .hero-box {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: 16px;
+      padding: 1.4rem;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hero-box strong {
+      font-size: 1rem;
+    }
+
+    /* MAIN LAYOUT */
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 3rem;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .muted {
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+
+    /* SUBJECT BAR */
+
+    .subject-bar {
+      margin-top: 1rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .subject-pill {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .subject-pill span.emoji {
+      font-size: 1rem;
+    }
+
+    .subject-pill:hover {
+      background: #e5e7eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(148, 163, 184, 0.4);
+    }
+
+    .subject-pill.active {
+      background: #4f46e5;
+      color: #f9fafb;
+      border-color: #4f46e5;
+      box-shadow: 0 6px 14px rgba(79, 70, 229, 0.5);
+    }
+
+    /* APP WRAPPER */
+
+    .app-wrapper {
+      margin-top: 0.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1.1fr;
+      gap: 1.6rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 950px) {
+      .app-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SUBJECT VISUAL AREA */
+
+    .subject-panel {
+      border-radius: 18px;
+      padding: 1.4rem;
+      position: relative;
+      overflow: hidden;
+      color: #f9fafb;
+      min-height: 210px;
+    }
+
+    .subject-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .subject-subtitle {
+      font-size: 0.95rem;
+      opacity: 0.95;
+      max-width: 420px;
+    }
+
+    .subject-tagline {
+      margin-top: 0.7rem;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    .floating-symbol {
+      position: absolute;
+      font-size: 1.1rem;
+      opacity: 0.18;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .floating-symbol.s1 { top: 18%; left: 60%; }
+    .floating-symbol.s2 { top: 55%; left: 10%; }
+    .floating-symbol.s3 { bottom: 10%; right: 8%; }
+
+    /* Subject themes */
+
+    .subject-math {
+      background: radial-gradient(circle at top left, #4f46e5, #111827);
+    }
+
+    .subject-physics {
+      background: radial-gradient(circle at top right, #0ea5e9, #111827);
+    }
+
+    .subject-business {
+      background: radial-gradient(circle at top left, #22c55e, #111827);
+    }
+
+    /* BOOKING AREA */
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+      padding: 1.3rem;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .card small {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .tutor-list {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+    }
+
+    .tutor-card {
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      padding: 0.9rem;
+    }
+
+    .tutor-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.25rem;
+      gap: 0.4rem;
+    }
+
+    .tutor-name {
+      font-weight: 600;
+    }
+
+    .tutor-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .slot-row {
+      margin-top: 0.55rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+    }
+
+    .slot-btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 0.25rem 0.6rem;
+      cursor: pointer;
+      background: #f9fafb;
+      transition: background 0.12s ease, transform 0.1s ease, box-shadow 0.12s ease;
+    }
+
+    .slot-btn:hover {
+      background: #e5e7eb;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(148, 163, 184, 0.7);
+    }
+
+    .price-note {
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin-top: 0.7rem;
+    }
+
+    .price-note strong {
+      color: #111827;
+    }
+
+    /* BOOKINGS VIEW */
+
+    .hidden {
+      display: none;
+    }
+
+    .booking-list {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      max-height: 360px;
+      overflow-y: auto;
+      padding-right: 0.3rem;
+    }
+
+    .booking-item {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      padding: 0.7rem 0.8rem;
+      font-size: 0.9rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 0.8fr;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 650px) {
+      .booking-item {
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+      }
+    }
+
+    .booking-main {
+      font-weight: 600;
+    }
+
+    .booking-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .booking-price {
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .btn-cancel {
+      border-radius: 999px;
+      border: none;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: #fee2e2;
+      color: #b91c1c;
+      justify-self: flex-end;
+      transition: background 0.12s ease;
+    }
+
+    .btn-cancel:hover {
+      background: #fecaca;
+    }
+
+    .empty-state {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-top: 0.5rem;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 1.3rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    footer span.brand {
+      font-weight: 600;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="nav">
+      <div class="logo">Tutors Connect</div>
+      <div class="nav-tabs">
+        <button class="nav-tab nav-tab-active" id="tab-subjects">Subjects</button>
+        <button class="nav-tab" id="tab-bookings">My bookings</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="hero-tagline">IGCSE Maths, Physics & Business • UAE & online</p>
+        <h1>Easy 1-to-1 IGCSE tutoring for your child.</h1>
+        <p>
+          A small team of tutors offering personalised support over Google Meet.
+          <span class="hero-highlight">First class is free</span>, then
+          <span class="hero-highlight">200 AED per session</span>.
+        </p>
+        <div class="hero-badge-row">
+          <div class="hero-badge">1-to-1 on Google Meet</div>
+          <div class="hero-badge">Flexible timings (UAE-friendly)</div>
+          <div class="hero-badge">Focused on exam preparation</div>
+        </div>
+      </div>
+      <div class="hero-box">
+        <strong>How it works</strong><br />
+        1. Choose a subject and tutor.<br />
+        2. Pick a time that works for you.<br />
+        3. We confirm by WhatsApp / email and send a Google Meet link.<br /><br />
+        <span style="font-size:0.85rem; opacity:0.9;">
+          This demo site stores bookings only in your browser for now. A real version
+          would connect to a proper booking system or calendar.
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN APP -->
+  <main>
+    <h2 class="section-title">Subjects & booking</h2>
+    <p class="muted">
+      Select a subject to see available tutors and time slots. Then switch to
+      <strong>My bookings</strong> to review or cancel any sessions.
+    </p>
+
+    <!-- SUBJECT BUTTONS -->
+    <div class="subject-bar">
+      <button class="subject-pill active" data-subject="math">
+        <span class="emoji">➕</span> IGCSE Maths
+      </button>
+      <button class="subject-pill" data-subject="physics">
+        <span class="emoji">⚛️</span> IGCSE Physics
+      </button>
+      <button class="subject-pill" data-subject="business">
+        <span class="emoji">📊</span> IGCSE Business
+      </button>
+      <!-- You can add more subjects later by copying these buttons -->
+    </div>
+
+    <div class="app-wrapper">
+
+      <!-- SUBJECT VISUAL PANEL -->
+      <section id="subject-panel" class="subject-panel subject-math">
+        <div class="subject-title" id="subject-title">IGCSE Maths</div>
+        <div class="subject-subtitle" id="subject-subtitle">
+          Build strong foundations in algebra, functions, geometry and statistics,
+          with lots of exam-style practice questions.
+        </div>
+        <div class="subject-tagline" id="subject-tagline">
+          We focus on your child's weak areas, homework and past papers to boost confidence.
+        </div>
+
+        <!-- Decorative floating symbols (change with subject) -->
+        <div class="floating-symbol s1" id="sym1">2x + 2 = 4</div>
+        <div class="floating-symbol s2" id="sym2">π · r²</div>
+        <div class="floating-symbol s3" id="sym3">√x</div>
+      </section>
+
+      <!-- RIGHT SIDE: BOOKING VIEW / BOOKINGS VIEW -->
+
+      <!-- Booking (Subjects) view -->
+      <section id="booking-view" class="card">
+        <h3>Available tutors & times</h3>
+        <small>Click a time slot to request a class. First class is free; after that 200 AED per session.</small>
+
+        <div class="tutor-list" id="tutor-list">
+          <!-- tutors injected here by JS -->
+        </div>
+
+        <p class="price-note">
+          <strong>Pricing:</strong> First class with Tutors Connect is <strong>free</strong>.
+          After that, each 1-hour session is <strong>200 AED</strong>.
+        </p>
+      </section>
+
+      <!-- My bookings view -->
+      <section id="bookings-view" class="card hidden">
+        <h3>My bookings</h3>
+        <small>These bookings are stored only in this browser as a demo.</small>
+
+        <div class="booking-list" id="booking-list">
+          <!-- bookings injected here -->
+        </div>
+
+        <p class="empty-state" id="booking-empty" style="display:none;">
+          You don’t have any bookings yet. Go to the <strong>Subjects</strong> tab to book a slot.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> <span class="brand">Tutors Connect</span>.
+    First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meet.
+  </footer>
+
+  <script>
+    // ---------- DATA ----------
+
+    const subjects = {
+      math: {
+        title: "IGCSE Maths",
+        subtitle: "Build strong foundations in algebra, functions, geometry and statistics, with lots of exam-style practice.",
+        tagline: "Perfect for Core & Extended students who want to improve grades and exam confidence.",
+        symbols: ["2x + 2 = 4", "π · r²", "√x"],
+        panelClass: "subject-math"
+      },
+      physics: {
+        title: "IGCSE Physics",
+        subtitle: "Understand the ideas behind forces, energy, electricity and waves with clear explanations and diagrams.",
+        tagline: "We combine theory with past-paper style questions so students know what to expect in the exam.",
+        symbols: ["E = mc²", "F = ma", "λ = v / f"],
+        panelClass: "subject-physics"
+      },
+      business: {
+        title: "IGCSE Business Studies",
+        subtitle: "Cover key topics like marketing, operations, finance and people in business using real-life examples.",
+        tagline: "Great for students who need help with case studies, key terms and structured exam answers.",
+        symbols: ["Profit = Revenue – Cost", "Market share ↑", "Cash flow"],
+        panelClass: "subject-business"
+      }
+    };
+
+    // Example tutors and slots (dummy data)
+    const tutors = [
+      {
+        name: "Ahmed",
+        subject: "math",
+        note: "Patient, step-by-step explanations. Great for algebra and exam revision.",
+        slots: [
+          "Sun 5:00–6:00 PM",
+          "Tue 7:00–8:00 PM",
+          "Thu 6:00–7:00 PM"
+        ]
+      },
+      {
+        name: "Sara",
+        subject: "math",
+        note: "Focus on past papers and exam techniques.",
+        slots: [
+          "Mon 5:00–6:00 PM",
+          "Wed 7:30–8:30 PM"
+        ]
+      },
+      {
+        name: "Omar",
+        subject: "physics",
+        note: "Explains concepts with diagrams and simple examples.",
+        slots: [
+          "Sat 3:00–4:00 PM",
+          "Tue 6:00–7:00 PM"
+        ]
+      },
+      {
+        name: "Lina",
+        subject: "business",
+        note: "Helps with case studies and structured answers.",
+        slots: [
+          "Sun 7:00–8:00 PM",
+          "Wed 5:00–6:00 PM"
+        ]
+      }
+    ];
+
+    // ---------- STATE ----------
+
+    let currentSubject = "math";
+    let bookings = []; // {id, subject, tutor, slot, price, isFree}
+
+    // Load from localStorage
+    function loadBookings() {
+      const stored = localStorage.getItem("tutorsConnectBookings");
+      if (stored) {
+        try {
+          bookings = JSON.parse(stored);
+        } catch {
+          bookings = [];
+        }
+      }
+    }
+
+    function saveBookings() {
+      localStorage.setItem("tutorsConnectBookings", JSON.stringify(bookings));
+    }
+
+    // ---------- UI HELPERS ----------
+
+    const subjectPanel = document.getElementById("subject-panel");
+    const subjectTitle = document.getElementById("subject-title");
+    const subjectSubtitle = document.getElementById("subject-subtitle");
+    const subjectTagline = document.getElementById("subject-tagline");
+    const sym1 = document.getElementById("sym1");
+    const sym2 = document.getElementById("sym2");
+    const sym3 = document.getElementById("sym3");
+
+    const tutorList = document.getElementById("tutor-list");
+    const bookingListEl = document.getElementById("booking-list");
+    const bookingEmptyEl = document.getElementById("booking-empty");
+
+    const tabSubjects = document.getElementById("tab-subjects");
+    const tabBookings = document.getElementById("tab-bookings");
+    const bookingView = document.getElementById("booking-view");
+    const bookingsView = document.getElementById("bookings-view");
+
+    function setSubject(subj) {
+      currentSubject = subj;
+
+      // Update pills
+      document.querySelectorAll(".subject-pill").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.subject === subj);
+      });
+
+      // Update subject visual
+      const data = subjects[subj];
+      subjectTitle.textContent = data.title;
+      subjectSubtitle.textContent = data.subtitle;
+      subjectTagline.textContent = data.tagline;
+
+      subjectPanel.classList.remove("subject-math", "subject-physics", "subject-business");
+      subjectPanel.classList.add(data.panelClass);
+
+      sym1.textContent = data.symbols[0];
+      sym2.textContent = data.symbols[1];
+      sym3.textContent = data.symbols[2];
+
+      // Render tutors for this subject
+      renderTutors();
+    }
+
+    function renderTutors() {
+      tutorList.innerHTML = "";
+      const filtered = tutors.filter(t => t.subject === currentSubject);
+
+      if (!filtered.length) {
+        tutorList.innerHTML = "<p class='muted'>No tutors added for this subject yet.</p>";
+        return;
+      }
+
+      filtered.forEach(tutor => {
+        const card = document.createElement("div");
+        card.className = "tutor-card";
+
+        const header = document.createElement("div");
+        header.className = "tutor-header";
+
+        const nameEl = document.createElement("div");
+        nameEl.className = "tutor-name";
+        nameEl.textContent = tutor.name;
+
+        const metaEl = document.createElement("div");
+        metaEl.className = "tutor-meta";
+        metaEl.textContent = "1-to-1 • Google Meet";
+
+        header.appendChild(nameEl);
+        header.appendChild(metaEl);
+
+        const noteEl = document.createElement("div");
+        noteEl.className = "tutor-meta";
+        noteEl.textContent = tutor.note;
+
+        const slotRow = document.createElement("div");
+        slotRow.className = "slot-row";
+
+        tutor.slots.forEach(slot => {
+          const btn = document.createElement("button");
+          btn.className = "slot-btn";
+          btn.textContent = slot;
+          btn.addEventListener("click", () => bookSlot(tutor, slot));
+          slotRow.appendChild(btn);
+        });
+
+        card.appendChild(header);
+        card.appendChild(noteEl);
+        card.appendChild(slotRow);
+        tutorList.appendChild(card);
+      });
+    }
+
+    function bookSlot(tutor, slot) {
+      // Determine if this is first booking (free)
+      const isFirst = bookings.length === 0;
+      const price = isFirst ? 0 : 200;
+
+      const booking = {
+        id: Date.now() + "_" + Math.random().toString(16).slice(2),
+        subject: tutor.subject,
+        tutor: tutor.name,
+        slot,
+        price,
+        isFree: isFirst
+      };
+
+      bookings.push(booking);
+      saveBookings();
+      renderBookings();
+
+      let msg = `Booked ${subjects[tutor.subject].title} with ${tutor.name} at ${slot}. `;
+      if (isFirst) {
+        msg += "This will be your free trial class.";
+      } else {
+        msg += "This session will be 200 AED.";
+      }
+
+      alert(msg);
+    }
+
+    function renderBookings() {
+      bookingListEl.innerHTML = "";
+      if (!bookings.length) {
+        bookingEmptyEl.style.display = "block";
+        return;
+      }
+      bookingEmptyEl.style.display = "none";
+
+      bookings.forEach(b => {
+        const item = document.createElement("div");
+        item.className = "booking-item";
+
+        const main = document.createElement("div");
+        main.className = "booking-main";
+        main.textContent = subjects[b.subject].title + " – " + b.tutor;
+
+        const meta = document.createElement("div");
+        meta.className = "booking-meta";
+        meta.textContent = b.slot;
+
+        const priceEl = document.createElement("div");
+        priceEl.className = "booking-price";
+        priceEl.textContent = b.isFree ? "Free trial" : "200 AED";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "btn-cancel";
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.addEventListener("click", () => cancelBooking(b.id));
+
+        item.appendChild(main);
+        item.appendChild(meta);
+        item.appendChild(priceEl);
+        item.appendChild(cancelBtn);
+
+        bookingListEl.appendChild(item);
+      });
+    }
+
+    function cancelBooking(id) {
+      bookings = bookings.filter(b => b.id !== id);
+      saveBookings();
+      renderBookings();
+    }
+
+    // Tab switching
+    function showSubjectsView() {
+      tabSubjects.classList.add("nav-tab-active");
+      tabBookings.classList.remove("nav-tab-active");
+      bookingView.classList.remove("hidden");
+      bookingsView.classList.add("hidden");
+    }
+
+    function showBookingsView() {
+      tabBookings.classList.add("nav-tab-active");
+      tabSubjects.classList.remove("nav-tab-active");
+      bookingView.classList.add("hidden");
+      bookingsView.classList.remove("hidden");
+      renderBookings();
+    }
+
+    tabSubjects.addEventListener("click", showSubjectsView);
+    tabBookings.addEventListener("click", showBookingsView);
+
+    // Init
+    document.getElementById("year").textContent = new Date().getFullYear();
+    loadBookings();
+    setSubject("math"); // default subject
+
+    // Subject pill click events
+    document.querySelectorAll(".subject-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        setSubject(btn.dataset.subject);
+      });
+    });
+  </script>
+</body>
+</html>
