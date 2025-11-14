@@ -602,7 +602,7 @@
 
   <footer>
     &copy; <span id="year"></span> <span class="brand">Tutors Connect</span>.
-    First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meet.
+    First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meets.
   </footer>
 
   <script>
@@ -787,33 +787,53 @@
       });
     }
 
-    function bookSlot(tutor, slot) {
-      // Determine if this is first booking (free)
-      const isFirst = bookings.length === 0;
-      const price = isFirst ? 0 : 200;
+   function bookSlot(tutor, slot) {
+  // Determine if this is first booking (free)
+  const isFirst = bookings.length === 0;
+  const price = isFirst ? 0 : 200;
 
-      const booking = {
-        id: Date.now() + "_" + Math.random().toString(16).slice(2),
-        subject: tutor.subject,
-        tutor: tutor.name,
-        slot,
-        price,
-        isFree: isFirst
-      };
+  const booking = {
+    id: Date.now() + "_" + Math.random().toString(16).slice(2),
+    subject: tutor.subject,
+    tutor: tutor.name,
+    slot,
+    price,
+    isFree: isFirst
+  };
 
-      bookings.push(booking);
-      saveBookings();
-      renderBookings();
+  bookings.push(booking);
+  saveBookings();
+  renderBookings();
 
-      let msg = `Booked ${subjects[tutor.subject].title} with ${tutor.name} at ${slot}. `;
-      if (isFirst) {
-        msg += "This will be your free trial class.";
-      } else {
-        msg += "This session will be 200 AED.";
-      }
+  // Auto-fill the form fields
+  const subjectField = document.getElementById("subject");
+  const slotField = document.getElementById("slot");
 
-      alert(msg);
-    }
+  if (subjectField) {
+    subjectField.value = subjects[tutor.subject].title;
+  }
+
+  if (slotField) {
+    slotField.value = `${slot} with ${tutor.name}`;
+  }
+
+  // Scroll to the confirm booking section
+  const confirmSection = document.getElementById("confirm-booking");
+  if (confirmSection) {
+    confirmSection.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Optional: message
+  let msg = `Booked ${subjects[tutor.subject].title} with ${tutor.name} at ${slot}. `;
+  if (isFirst) {
+    msg += "This will be your free trial class.";
+  } else {
+    msg += "This session will be 200 AED.";
+  }
+
+  alert(msg);
+}
+
 
     function renderBookings() {
       bookingListEl.innerHTML = "";
@@ -892,4 +912,5 @@
   </script>
 </body>
 </html>
+
 
