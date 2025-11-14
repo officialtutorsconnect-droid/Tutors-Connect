@@ -410,20 +410,20 @@
 
     // On submit, also store booking to localStorage so main page can show X on that slot
     const form = document.getElementById("confirm-form");
-    form.addEventListener("submit", () => {
-      const booking = {
-        id: Date.now() + "_" + Math.random().toString(16).slice(2),
-        subject: subjectKey,
-        tutor: tutorName,
-        slot: slot,
-        price: price,
-        isFree: isFirst
-      };
-      bookings.push(booking);
-      localStorage.setItem("tutorsConnectBookings", JSON.stringify(bookings));
-      // Formspree will handle sending the form; we just update localStorage.
-      // You could optionally show a thank-you message here after redirect.
-    });
+form.addEventListener("submit", () => {
+  const booking = {
+    subject: subjectKey,   // "math", "physics", etc.
+    tutor: tutorName,
+    slot: slot,
+    price: price,
+    isFree: isFirst,
+    createdAt: new Date()
+  };
+
+  db.collection("bookings").add(booking)
+    .catch(err => console.error("Error saving booking:", err));
+});
+
   </script>
 </body>
 </html>
