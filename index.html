@@ -16,10 +16,24 @@
       color: #111827;
       background-color: #f3f4f6;
       line-height: 1.6;
+      transition: background-color 0.25s ease;
     }
 
     html {
       scroll-behavior: smooth;
+    }
+
+    /* PAGE THEMES (change with subject) */
+    body.theme-math {
+      background-color: #eef2ff; /* soft indigo */
+    }
+
+    body.theme-physics {
+      background-color: #e0f2fe; /* soft sky blue */
+    }
+
+    body.theme-business {
+      background-color: #ecfdf3; /* soft green */
     }
 
     /* HEADER / NAV */
@@ -255,7 +269,7 @@
     .floating-symbol.s2 { top: 55%; left: 10%; }
     .floating-symbol.s3 { bottom: 10%; right: 8%; }
 
-    /* Subject themes */
+    /* Subject themes (panel only) */
 
     .subject-math {
       background: radial-gradient(circle at top left, #4f46e5, #111827);
@@ -475,10 +489,9 @@
         <strong>How it works</strong><br />
         1. Choose a subject and tutor.<br />
         2. Pick a time that works for you.<br />
-        3. We confirm by WhatsApp / email and send a Google Meet link.<br /><br />
+        3. You’re taken to a confirmation page to submit your details.<br /><br />
         <span style="font-size:0.85rem; opacity:0.9;">
-          This demo site stores bookings only in your browser for now. A real version
-          would connect to a proper booking system or calendar.
+          Bookings are saved in your browser and you’ll receive a follow-up via WhatsApp or email.
         </span>
       </div>
     </div>
@@ -488,8 +501,8 @@
   <main>
     <h2 class="section-title">Subjects & booking</h2>
     <p class="muted">
-      Select a subject to see available tutors and time slots. Then switch to
-      <strong>My bookings</strong> to review or cancel any sessions.
+      Select a subject to see available tutors and time slots. When you click a time,
+      you’ll be taken to a confirmation page to finalise the booking.
     </p>
 
     <!-- SUBJECT BUTTONS -->
@@ -503,7 +516,6 @@
       <button class="subject-pill" data-subject="business">
         <span class="emoji">📊</span> IGCSE Business
       </button>
-      <!-- You can add more subjects later by copying these buttons -->
     </div>
 
     <div class="app-wrapper">
@@ -530,7 +542,7 @@
       <!-- Booking (Subjects) view -->
       <section id="booking-view" class="card">
         <h3>Available tutors & times</h3>
-        <small>Click a time slot to request a class. First class is free; after that 200 AED per session.</small>
+        <small>Click a time slot to continue to the confirmation page.</small>
 
         <div class="tutor-list" id="tutor-list">
           <!-- tutors injected here by JS -->
@@ -556,53 +568,12 @@
         </p>
       </section>
 
-      <section id="confirm-booking" style="margin-top: 2.5rem;">
-  <h2>Confirm your booking</h2>
-  <p class="muted">
-    After selecting a tutor and time slot, fill this form so we can confirm your booking.
-    You will receive a reply via WhatsApp or email with the Google Meet link.
-  </p>
-
-  <form action="https://formspree.io/f/mldagzjn" method="POST"
-        style="margin-top: 1rem; max-width: 480px; padding: 1.3rem; background:#fff;
-               border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-
-    <label for="parentName">Your Name</label>
-    <input id="parentName" name="Parent Name" type="text" required />
-
-    <label for="studentName" style="margin-top:0.6rem;">Student’s Name</label>
-    <input id="studentName" name="Student Name" type="text" required />
-
-    <label for="contact" style="margin-top:0.6rem;">Email or WhatsApp Number</label>
-    <input id="contact" name="Contact" type="text" required />
-
-    <label for="subject" style="margin-top:0.6rem;">Subject</label>
-    <input id="subject" name="Subject" type="text"
-           placeholder="e.g. IGCSE Maths" required />
-
-    <label for="slot" style="margin-top:0.6rem;">Preferred Slot</label>
-    <input id="slot" name="Preferred Slot" type="text"
-           placeholder="e.g. Tue 7–8 PM with Ahmed" required />
-
-    <label for="details" style="margin-top:0.6rem;">Additional Information</label>
-    <textarea id="details" name="Notes"
-              placeholder="Current grade, topics they struggle with, preferred schedule, etc."></textarea>
-
-    <button type="submit" class="slot-btn" 
-            style="margin-top:0.9rem; width: 100%; background:#4f46e5; color:#fff;
-                   padding:0.6rem 1rem; border-radius:999px; border:none; cursor:pointer;">
-      Send Booking Request
-    </button>
-  </form>
-</section>
-
-
     </div>
   </main>
 
   <footer>
     &copy; <span id="year"></span> <span class="brand">Tutors Connect</span>.
-    First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meets.
+    First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meet.
   </footer>
 
   <script>
@@ -614,21 +585,24 @@
         subtitle: "Build strong foundations in algebra, functions, geometry and statistics, with lots of exam-style practice.",
         tagline: "Perfect for Core & Extended students who want to improve grades and exam confidence.",
         symbols: ["2x + 2 = 4", "π · r²", "√x"],
-        panelClass: "subject-math"
+        panelClass: "subject-math",
+        themeClass: "theme-math"
       },
       physics: {
         title: "IGCSE Physics",
         subtitle: "Understand the ideas behind forces, energy, electricity and waves with clear explanations and diagrams.",
         tagline: "We combine theory with past-paper style questions so students know what to expect in the exam.",
         symbols: ["E = mc²", "F = ma", "λ = v / f"],
-        panelClass: "subject-physics"
+        panelClass: "subject-physics",
+        themeClass: "theme-physics"
       },
       business: {
         title: "IGCSE Business Studies",
         subtitle: "Cover key topics like marketing, operations, finance and people in business using real-life examples.",
         tagline: "Great for students who need help with case studies, key terms and structured exam answers.",
         symbols: ["Profit = Revenue – Cost", "Market share ↑", "Cash flow"],
-        panelClass: "subject-business"
+        panelClass: "subject-business",
+        themeClass: "theme-business"
       }
     };
 
@@ -734,6 +708,10 @@
       sym2.textContent = data.symbols[1];
       sym3.textContent = data.symbols[2];
 
+      // Update page background theme
+      document.body.classList.remove("theme-math", "theme-physics", "theme-business");
+      document.body.classList.add(data.themeClass);
+
       // Render tutors for this subject
       renderTutors();
     }
@@ -787,53 +765,17 @@
       });
     }
 
-   function bookSlot(tutor, slot) {
-  // Determine if this is first booking (free)
-  const isFirst = bookings.length === 0;
-  const price = isFirst ? 0 : 200;
+    // When parent clicks a slot, go to confirm page with details in URL
+    function bookSlot(tutor, slot) {
+      const params = new URLSearchParams({
+        subject: tutor.subject,
+        tutor: tutor.name,
+        slot: slot
+      });
 
-  const booking = {
-    id: Date.now() + "_" + Math.random().toString(16).slice(2),
-    subject: tutor.subject,
-    tutor: tutor.name,
-    slot,
-    price,
-    isFree: isFirst
-  };
-
-  bookings.push(booking);
-  saveBookings();
-  renderBookings();
-
-  // Auto-fill the form fields
-  const subjectField = document.getElementById("subject");
-  const slotField = document.getElementById("slot");
-
-  if (subjectField) {
-    subjectField.value = subjects[tutor.subject].title;
-  }
-
-  if (slotField) {
-    slotField.value = `${slot} with ${tutor.name}`;
-  }
-
-  // Scroll to the confirm booking section
-  const confirmSection = document.getElementById("confirm-booking");
-  if (confirmSection) {
-    confirmSection.scrollIntoView({ behavior: "smooth" });
-  }
-
-  // Optional: message
-  let msg = `Booked ${subjects[tutor.subject].title} with ${tutor.name} at ${slot}. `;
-  if (isFirst) {
-    msg += "This will be your free trial class.";
-  } else {
-    msg += "This session will be 200 AED.";
-  }
-
-  alert(msg);
-}
-
+      // Redirect to confirmation page (relative path)
+      window.location.href = "confirm.html?" + params.toString();
+    }
 
     function renderBookings() {
       bookingListEl.innerHTML = "";
@@ -849,7 +791,7 @@
 
         const main = document.createElement("div");
         main.className = "booking-main";
-        main.textContent = subjects[b.subject].title + " – " + b.tutor;
+        main.textContent = subjects[b.subject]?.title + " – " + b.tutor;
 
         const meta = document.createElement("div");
         meta.className = "booking-meta";
@@ -912,5 +854,3 @@
   </script>
 </body>
 </html>
-
-
