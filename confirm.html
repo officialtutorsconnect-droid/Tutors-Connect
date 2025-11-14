@@ -333,97 +333,133 @@
     &copy; <span id="year"></span> <span class="brand">Tutors Connect</span>. First class free • 200 AED per class after.
   </footer>
 
-  <script>
-    // ---------- CONFIG: subject themes ----------
-    const subjectConfigs = {
-      math: {
-        title: "IGCSE Maths",
-        themeClass: "theme-math",
-        symbols: ["2x + 2 = 4", "π · r²"],
-      },
-      physics: {
-        title: "IGCSE Physics",
-        themeClass: "theme-physics",
-        symbols: ["E = mc²", "F = ma"],
-      },
-      business: {
-        title: "IGCSE Business Studies",
-        themeClass: "theme-business",
-        symbols: ["Profit = Revenue – Cost", "Market growth ↑"],
-      }
-    };
+  <!-- Firebase v8 SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-    function loadExistingBookings() {
-      const stored = localStorage.getItem("tutorsConnectBookings");
-      if (!stored) return [];
-      try {
-        return JSON.parse(stored) || [];
-      } catch {
-        return [];
-      }
-    }
-
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Parse URL params coming from index.html
-    const params = new URLSearchParams(window.location.search);
-    const subjectKey = params.get("subject") || "math";
-    const tutorName = params.get("tutor") || "Tutor";
-    const slot = params.get("slot") || "Time not specified";
-
-    const subjectInfo = subjectConfigs[subjectKey] || subjectConfigs.math;
-
-    // Apply background theme
-    document.body.classList.add(subjectInfo.themeClass);
-
-    // Update summary text
-    document.getElementById("summary-subject").textContent = subjectInfo.title;
-    document.getElementById("summary-tutor").textContent = tutorName;
-    document.getElementById("summary-slot").textContent = slot;
-
-    // Update background symbols
-    document.getElementById("symbol1").textContent = subjectInfo.symbols[0];
-    document.getElementById("symbol2").textContent = subjectInfo.symbols[1];
-
-    // Determine pricing based on number of previous bookings
-    let bookings = loadExistingBookings();
-    const isFirst = bookings.length === 0;
-    const price = isFirst ? 0 : 200; // change 200 here if you change your price
-
-    const summaryPrice = document.getElementById("summary-price");
-    if (isFirst) {
-      summaryPrice.innerHTML = "This will be your <strong>free trial class</strong> (0 AED). After this, each session is 200 AED.";
-    } else {
-      summaryPrice.innerHTML = "This session will be <strong>200 AED</strong>. Your free trial has already been used.";
-    }
-
-    // Prefill form fields
-    const subjectField = document.getElementById("subject");
-    const tutorField = document.getElementById("tutor");
-    const slotField = document.getElementById("slot");
-    const priceField = document.getElementById("price");
-
-    subjectField.value = subjectInfo.title;
-    tutorField.value = tutorName;
-    slotField.value = slot;
-    priceField.value = isFirst ? "Free trial (0 AED)" : "200 AED";
-
-    // On submit, also store booking to localStorage so main page can show X on that slot
-    const form = document.getElementById("confirm-form");
-form.addEventListener("submit", () => {
-  const booking = {
-    subject: subjectKey,   // "math", "physics", etc.
-    tutor: tutorName,
-    slot: slot,
-    price: price,
-    isFree: isFirst,
-    createdAt: new Date()
+<script>
+  // Your Firebase config
+  var firebaseConfig = {
+    apiKey: "AIzaSyDvhP_i8wwSC9bbFyrBKphWJ6YG8b-PgUw",
+    authDomain: "tutors-connect-931b5.firebaseapp.com",
+    projectId: "tutors-connect-931b5",
+    storageBucket: "tutors-connect-931b5.firebasestorage.app",
+    messagingSenderId: "811594859986",
+    appId: "1:811594859986:web:cab8552402e62fa4e2340b"
   };
 
-  db.collection("bookings").add(booking)
-    .catch(err => console.error("Error saving booking:", err));
-});
+  // Initialize Firebase + Firestore
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+</script>
 
-  </script>
+  
+ <script>
+  // ---------- CONFIG: subject themes ----------
+  const subjectConfigs = {
+    math: {
+      title: "IGCSE Maths",
+      themeClass: "theme-math",
+      symbols: ["2x + 2 = 4", "π · r²"],
+    },
+    physics: {
+      title: "IGCSE Physics",
+      themeClass: "theme-physics",
+      symbols: ["E = mc²", "F = ma"],
+    },
+    business: {
+      title: "IGCSE Business Studies",
+      themeClass: "theme-business",
+      symbols: ["Profit = Revenue – Cost", "Market growth ↑"],
+    }
+  };
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Parse URL params coming from index.html
+  const params = new URLSearchParams(window.location.search);
+  const subjectKey = params.get("subject") || "math";
+  const tutorName = params.get("tutor") || "Tutor";
+  const slot = params.get("slot") || "Time not specified";
+
+  const subjectInfo = subjectConfigs[subjectKey] || subjectConfigs.math;
+
+  // Apply background theme
+  document.body.classList.add(subjectInfo.themeClass);
+
+  // Update summary text
+  document.getElementById("summary-subject").textContent = subjectInfo.title;
+  document.getElementById("summary-tutor").textContent = tutorName;
+  document.getElementById("summary-slot").textContent = slot;
+
+  // Update background symbols
+  document.getElementById("symbol1").textContent = subjectInfo.symbols[0];
+  document.getElementById("symbol2").textContent = subjectInfo.symbols[1];
+
+  // Prefill form fields (except price, which we calculate after checking Firestore)
+  const subjectField = document.getElementById("subject");
+  const tutorField = document.getElementById("tutor");
+  const slotField = document.getElementById("slot");
+  const priceField = document.getElementById("price");
+
+  subjectField.value = subjectInfo.title;
+  tutorField.value = tutorName;
+  slotField.value = slot;
+
+  // Global vars used in submit handler
+  let isFirst = true;
+  let price = 0;
+
+  // Check Firestore bookings to decide if this is the free trial or 200 AED
+  async function initPricingAndSummary() {
+    try {
+      const snapshot = await db.collection("bookings").get();
+      const bookingCount = snapshot.size; // how many bookings exist in total
+
+      isFirst = bookingCount === 0;
+      price = isFirst ? 0 : 200; // change 200 here if you change your price
+
+      const summaryPrice = document.getElementById("summary-price");
+      if (isFirst) {
+        summaryPrice.innerHTML =
+          "This will be your <strong>free trial class</strong> (0 AED). After this, each session is 200 AED.";
+        priceField.value = "Free trial (0 AED)";
+      } else {
+        summaryPrice.innerHTML =
+          "This session will be <strong>200 AED</strong>. Your free trial has already been used.";
+        priceField.value = "200 AED";
+      }
+    } catch (err) {
+      console.error("Error loading bookings from Firestore:", err);
+      // Fallback: assume still free if Firestore fails
+      isFirst = true;
+      price = 0;
+      document.getElementById("summary-price").innerHTML =
+        "This will be your <strong>free trial class</strong> (0 AED). After this, each session is 200 AED.";
+      priceField.value = "Free trial (0 AED)";
+    }
+  }
+
+  // Run pricing setup on load
+  initPricingAndSummary();
+
+  // On submit, also store booking to Firestore so main page can show X on that slot for everyone
+  const form = document.getElementById("confirm-form");
+  form.addEventListener("submit", () => {
+    const booking = {
+      subject: subjectKey,   // "math", "physics", "business"
+      tutor: tutorName,
+      slot: slot,
+      price: price,
+      isFree: isFirst,
+      createdAt: new Date()
+    };
+
+    db.collection("bookings").add(booking)
+      .catch(err => console.error("Error saving booking:", err));
+    // We let Formspree handle the actual form submission / redirect
+  });
+</script>
+
 </body>
 </html>
