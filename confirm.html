@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Confirm your booking – Tutors Connect</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #111827;
+      background-color: #f3f4f6;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.25s ease;
+    }
+
+    /* Theme classes to match subject */
+    body.theme-math {
+      background-color: #eef2ff;
+    }
+
+    body.theme-physics {
+      background-color: #e0f2fe;
+    }
+
+    body.theme-business {
+      background-color: #ecfdf3;
+    }
+
+    header {
+      background: #111827;
+      color: #f9fafb;
+      padding: 0.75rem 1.5rem;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.5);
+    }
+
+    .nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 1.2rem;
+    }
+
+    .nav-note {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .wrap {
+      max-width: 900px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 850px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .summary-card {
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      border-radius: 18px;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.7);
+    }
+
+    .summary-tag {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.8;
+      margin-bottom: 0.4rem;
+    }
+
+    .summary-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+
+    .summary-line {
+      font-size: 0.95rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .summary-label {
+      opacity: 0.7;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .summary-value {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .summary-price {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .summary-price strong {
+      color: #facc15;
+    }
+
+    .hint {
+      font-size: 0.8rem;
+      opacity: 0.8;
+      margin-top: 0.5rem;
+    }
+
+    .bg-symbol {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.12;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .bg-symbol.s1 { top: 10%; right: 8%; }
+    .bg-symbol.s2 { bottom: 8%; left: 6%; }
+
+    .form-card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1.4rem 1.4rem 1.6rem;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    }
+
+    .form-card h2 {
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-muted {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 0.8rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      margin-top: 0.7rem;
+      margin-bottom: 0.2rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.55rem 0.7rem;
+      border-radius: 9px;
+      border: 1px solid #d1d5db;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    input[readonly] {
+      background: #f3f4f6;
+      color: #4b5563;
+    }
+
+    .btn-primary {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: #4f46e5;
+      color: #f9fafb;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(79, 70, 229, 0.45);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      color: #4b5563;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      padding: 1rem 1.5rem 1.4rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    footer span.brand {
+      font-weight: 600;
+      color: #111827;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <div class="logo">Tutors Connect</div>
+      <div class="nav-note">Booking confirmation</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <!-- Summary panel -->
+      <section class="summary-card">
+        <div class="summary-tag">Review your booking</div>
+        <div class="summary-title" id="summary-subject">IGCSE Subject</div>
+
+        <div class="summary-line">
+          <span class="summary-label">Tutor</span><br />
+          <span class="summary-value" id="summary-tutor">Tutor name</span>
+        </div>
+
+        <div class="summary-line">
+          <span class="summary-label">Time</span><br />
+          <span class="summary-value" id="summary-slot">Selected slot</span>
+        </div>
+
+        <div class="summary-price" id="summary-price">
+          First class is free. This session will be calculated based on your history.
+        </div>
+
+        <div class="hint">
+          After you confirm, we’ll review your request and send a WhatsApp or email with
+          the Google Meet link and any additional details.
+        </div>
+
+        <div class="bg-symbol s1" id="symbol1">E = mc²</div>
+        <div class="bg-symbol s2" id="symbol2">2x + 2 = 4</div>
+      </section>
+
+      <!-- Elegant Formspree form -->
+      <section class="form-card">
+        <h2>Confirm your booking</h2>
+        <p class="form-muted">
+          Please fill in your contact details so we can confirm this lesson and send the meeting link.
+        </p>
+
+        <form id="confirm-form" action="https://formspree.io/f/mldagzjn" method="POST">
+          <label for="parentName">Your name</label>
+          <input id="parentName" name="Parent Name" type="text" placeholder="Parent / guardian name" required />
+
+          <label for="studentName">Student’s name</label>
+          <input id="studentName" name="Student Name" type="text" placeholder="Student's name" required />
+
+          <label for="contact">Email or WhatsApp number</label>
+          <input id="contact" name="Contact" type="text" placeholder="e.g. +971..." required />
+
+          <label for="subject">Subject</label>
+          <input id="subject" name="Subject" type="text" readonly />
+
+          <label for="tutor">Tutor</label>
+          <input id="tutor" name="Tutor" type="text" readonly />
+
+          <label for="slot">Preferred time</label>
+          <input id="slot" name="Preferred Slot" type="text" readonly />
+
+          <label for="price">Session price</label>
+          <input id="price" name="Session Price" type="text" readonly />
+
+          <label for="details">Anything we should know?</label>
+          <textarea id="details" name="Notes"
+            placeholder="Current grade, topics they struggle with, preferred schedule, special requests, etc."></textarea>
+
+          <button type="submit" class="btn-primary">
+            Confirm and send booking request
+          </button>
+
+          <a href="index.html" class="back-link">← Go back to choose a different time</a>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> <span class="brand">Tutors Connect</span>. First class free • 200 AED per class after.
+  </footer>
+
+  <script>
+    const subjectConfigs = {
+      math: {
+        title: "IGCSE Maths",
+        themeClass: "theme-math",
+        symbols: ["2x + 2 = 4", "π · r²"],
+      },
+      physics: {
+        title: "IGCSE Physics",
+        themeClass: "theme-physics",
+        symbols: ["E = mc²", "F = ma"],
+      },
+      business: {
+        title: "IGCSE Business Studies",
+        themeClass: "theme-business",
+        symbols: ["Profit = Revenue – Cost", "Market growth ↑"],
+      }
+    };
+
+    function loadExistingBookings() {
+      const stored = localStorage.getItem("tutorsConnectBookings");
+      if (!stored) return [];
+      try {
+        return JSON.parse(stored) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Parse URL params
+    const params = new URLSearchParams(window.location.search);
+    const subjectKey = params.get("subject") || "math";
+    const tutorName = params.get("tutor") || "Tutor";
+    const slot = params.get("slot") || "Time not specified";
+
+    const subjectInfo = subjectConfigs[subjectKey] || subjectConfigs.math;
+
+    // Apply theme
+    document.body.classList.add(subjectInfo.themeClass);
+
+    // Update summary text
+    document.getElementById("summary-subject").textContent = subjectInfo.title;
+    document.getElementById("summary-tutor").textContent = tutorName;
+    document.getElementById("summary-slot").textContent = slot;
+
+    // Update background symbols
+    document.getElementById("symbol1").textContent = subjectInfo.symbols[0];
+    document.getElementById("symbol2").textContent = subjectInfo.symbols[1];
+
+    // Determine pricing based on number of previous bookings
+    let bookings = loadExistingBookings();
+    const isFirst = bookings.length === 0;
+    const price = isFirst ? 0 : 200;
+
+    const summaryPrice = document.getElementById("summary-price");
+    if (isFirst) {
+      summaryPrice.innerHTML = "This will be your <strong>free trial class</strong> (0 AED). After this, each session is 200 AED.";
+    } else {
+      summaryPrice.innerHTML = "This session will be <strong>200 AED</strong>. First class has already been used.";
+    }
+
+    // Prefill form fields
+    const subjectField = document.getElementById("subject");
+    const tutorField = document.getElementById("tutor");
+    const slotField = document.getElementById("slot");
+    const priceField = document.getElementById("price");
+
+    subjectField.value = subjectInfo.title;
+    tutorField.value = tutorName;
+    slotField.value = slot;
+    priceField.value = isFirst ? "Free trial (0 AED)" : "200 AED";
+
+    // On submit, store booking to localStorage as well
+    const form = document.getElementById("confirm-form");
+    form.addEventListener("submit", () => {
+      const booking = {
+        id: Date.now() + "_" + Math.random().toString(16).slice(2),
+        subject: subjectKey,
+        tutor: tutorName,
+        slot: slot,
+        price: price,
+        isFree: isFirst
+      };
+      bookings.push(booking);
+      localStorage.setItem("tutorsConnectBookings", JSON.stringify(bookings));
+      // Formspree submission will continue as normal
+    });
+  </script>
+</body>
+</html>
