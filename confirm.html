@@ -24,7 +24,7 @@
 
     /* Theme classes to match subject */
     body.theme-math {
-      background-color: #eef2ff;
+      background-color: #fee2e2; /* soft red to match maths */
     }
 
     body.theme-physics {
@@ -160,6 +160,12 @@
 
     .form-card h2 {
       font-size: 1.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .step-label {
+      font-size: 0.8rem;
+      color: #6b7280;
       margin-bottom: 0.4rem;
     }
 
@@ -245,7 +251,7 @@
   <header>
     <div class="nav-inner">
       <div class="logo">Tutors Connect</div>
-      <div class="nav-note">Booking confirmation</div>
+      <div class="nav-note">Step 2 of 2 · Confirm your booking</div>
     </div>
   </header>
 
@@ -271,8 +277,8 @@
         </div>
 
         <div class="hint">
-          After you confirm, we’ll review your request and send a WhatsApp or email with
-          the Google Meet link and any additional details.
+          After you confirm, we’ll message you on WhatsApp (or email if you prefer)
+          with the Google Meet link and any additional details.
         </div>
 
         <div class="bg-symbol s1" id="symbol1">E = mc²</div>
@@ -282,8 +288,9 @@
       <!-- Elegant Formspree form -->
       <section class="form-card">
         <h2>Confirm your booking</h2>
+        <p class="step-label">Step 2 of 2 – Share your details so we can contact you.</p>
         <p class="form-muted">
-          Please fill in your contact details so we can confirm this lesson and send the meeting link.
+          Please fill in your contact details so we can confirm this lesson and send the meeting link on WhatsApp.
         </p>
 
         <form id="confirm-form" action="https://formspree.io/f/mldagzjn" method="POST">
@@ -293,8 +300,8 @@
           <label for="studentName">Student’s name</label>
           <input id="studentName" name="Student Name" type="text" placeholder="Student's name" required />
 
-          <label for="contact">Email or WhatsApp number</label>
-          <input id="contact" name="Contact" type="text" placeholder="e.g. +971..." required />
+          <label for="whatsapp">WhatsApp number</label>
+          <input id="whatsapp" name="WhatsApp Number" type="tel" placeholder="+971 5x xxx xxxx" required />
 
           <label for="subject">Subject</label>
           <input id="subject" name="Subject" type="text" readonly />
@@ -327,6 +334,7 @@
   </footer>
 
   <script>
+    // ---------- CONFIG: subject themes ----------
     const subjectConfigs = {
       math: {
         title: "IGCSE Maths",
@@ -357,7 +365,7 @@
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Parse URL params
+    // Parse URL params coming from index.html
     const params = new URLSearchParams(window.location.search);
     const subjectKey = params.get("subject") || "math";
     const tutorName = params.get("tutor") || "Tutor";
@@ -365,7 +373,7 @@
 
     const subjectInfo = subjectConfigs[subjectKey] || subjectConfigs.math;
 
-    // Apply theme
+    // Apply background theme
     document.body.classList.add(subjectInfo.themeClass);
 
     // Update summary text
@@ -380,13 +388,13 @@
     // Determine pricing based on number of previous bookings
     let bookings = loadExistingBookings();
     const isFirst = bookings.length === 0;
-    const price = isFirst ? 0 : 200;
+    const price = isFirst ? 0 : 200; // change 200 here if you change your price
 
     const summaryPrice = document.getElementById("summary-price");
     if (isFirst) {
       summaryPrice.innerHTML = "This will be your <strong>free trial class</strong> (0 AED). After this, each session is 200 AED.";
     } else {
-      summaryPrice.innerHTML = "This session will be <strong>200 AED</strong>. First class has already been used.";
+      summaryPrice.innerHTML = "This session will be <strong>200 AED</strong>. Your free trial has already been used.";
     }
 
     // Prefill form fields
@@ -400,7 +408,7 @@
     slotField.value = slot;
     priceField.value = isFirst ? "Free trial (0 AED)" : "200 AED";
 
-    // On submit, store booking to localStorage as well
+    // On submit, also store booking to localStorage so main page can show X on that slot
     const form = document.getElementById("confirm-form");
     form.addEventListener("submit", () => {
       const booking = {
@@ -413,7 +421,8 @@
       };
       bookings.push(booking);
       localStorage.setItem("tutorsConnectBookings", JSON.stringify(bookings));
-      // Formspree submission will continue as normal
+      // Formspree will handle sending the form; we just update localStorage.
+      // You could optionally show a thank-you message here after redirect.
     });
   </script>
 </body>
