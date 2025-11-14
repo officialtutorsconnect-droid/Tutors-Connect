@@ -556,6 +556,47 @@
         </p>
       </section>
 
+      <section id="confirm-booking" style="margin-top: 2.5rem;">
+  <h2>Confirm your booking</h2>
+  <p class="muted">
+    After selecting a tutor and time slot, fill this form so we can confirm your booking.
+    You will receive a reply via WhatsApp or email with the Google Meet link.
+  </p>
+
+  <form action="https://formspree.io/f/mldagzjn" method="POST"
+        style="margin-top: 1rem; max-width: 480px; padding: 1.3rem; background:#fff;
+               border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+
+    <label for="parentName">Your Name</label>
+    <input id="parentName" name="Parent Name" type="text" required />
+
+    <label for="studentName" style="margin-top:0.6rem;">Student’s Name</label>
+    <input id="studentName" name="Student Name" type="text" required />
+
+    <label for="contact" style="margin-top:0.6rem;">Email or WhatsApp Number</label>
+    <input id="contact" name="Contact" type="text" required />
+
+    <label for="subject" style="margin-top:0.6rem;">Subject</label>
+    <input id="subject" name="Subject" type="text"
+           placeholder="e.g. IGCSE Maths" required />
+
+    <label for="slot" style="margin-top:0.6rem;">Preferred Slot</label>
+    <input id="slot" name="Preferred Slot" type="text"
+           placeholder="e.g. Tue 7–8 PM with Ahmed" required />
+
+    <label for="details" style="margin-top:0.6rem;">Additional Information</label>
+    <textarea id="details" name="Notes"
+              placeholder="Current grade, topics they struggle with, preferred schedule, etc."></textarea>
+
+    <button type="submit" class="slot-btn" 
+            style="margin-top:0.9rem; width: 100%; background:#4f46e5; color:#fff;
+                   padding:0.6rem 1rem; border-radius:999px; border:none; cursor:pointer;">
+      Send Booking Request
+    </button>
+  </form>
+</section>
+
+
     </div>
   </main>
 
@@ -851,3 +892,4 @@
   </script>
 </body>
 </html>
+
