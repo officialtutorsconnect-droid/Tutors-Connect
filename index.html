@@ -609,6 +609,28 @@
     First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meets.
   </footer>
 
+
+  <!-- Firebase v8 SDK -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+<script>
+  // Your Firebase config (from the console)
+  var firebaseConfig = {
+    apiKey: "AIzaSyDvhP_i8wwSC9bbFyrBKphWJ6YG8b-PgUw",
+    authDomain: "tutors-connect-931b5.firebaseapp.com",
+    projectId: "tutors-connect-931b5",
+    storageBucket: "tutors-connect-931b5.firebasestorage.app",
+    messagingSenderId: "811594859986",
+    appId: "1:811594859986:web:cab8552402e62fa4e2340b"
+    // measurementId is optional for this
+  };
+
+  // Initialize Firebase + Firestore
+  firebase.initializeApp(firebaseConfig);
+  var db = firebase.firestore();
+</script>
+
   <script>
     // ---------- CONFIG: SUBJECTS & TUTORS ----------
     // To change descriptions or add subjects/tutors, edit this section.
@@ -684,22 +706,16 @@
     let currentSubject = "math";
     let bookings = []; // {id, subject, tutor, slot, price, isFree}
 
-    function loadBookings() {
-      const stored = localStorage.getItem("tutorsConnectBookings");
-      if (!stored) {
-        bookings = [];
-        return;
-      }
-      try {
-        bookings = JSON.parse(stored) || [];
-      } catch {
-        bookings = [];
-      }
-    }
+  async function loadBookings() {
+  const snapshot = await db.collection("bookings").get();
+  bookings = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+}
 
-    function saveBookings() {
-      localStorage.setItem("tutorsConnectBookings", JSON.stringify(bookings));
-    }
+
+   
 
     function isSlotBooked(subjectKey, tutorName, slotText) {
       return bookings.some(
@@ -861,12 +877,16 @@
       });
     }
 
-    function cancelBooking(id) {
-      bookings = bookings.filter(b => b.id !== id);
-      saveBookings();
-      renderBookings();
-      renderTutors(); // refresh slots so cancelled times become available again
-    }
+   async function cancelBooking(id) {
+  // Remove booking from Firestore
+  await db.collection("bookings").doc(id).delete();
+
+  // Reload bookings from Firestore
+  await loadBookings();
+  renderBookings();
+  renderTutors(); // refresh slots so cancelled times become available again
+}
+
 
     // ---------- TAB SWITCHING ----------
 
@@ -890,15 +910,21 @@
 
     // ---------- INIT ----------
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-    loadBookings();
-    setSubject("math");
+   document.getElementById("year").textContent = new Date().getFullYear();
 
-    document.querySelectorAll(".subject-pill").forEach(btn => {
-      btn.addEventListener("click", () => {
-        setSubject(btn.dataset.subject);
-      });
-    });
+// Load shared bookings from Firestore first, then render
+loadBookings().then(() => {
+  setSubject("math");
+  renderBookings();
+});
+
+document.querySelectorAll(".subject-pill").forEach(btn => {
+  btn.addEventListener("click", () => {
+    setSubject(btn.dataset.subject);
+  });
+});
+
   </script>
 </body>
 </html>
+
