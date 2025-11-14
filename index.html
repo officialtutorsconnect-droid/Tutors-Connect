@@ -23,19 +23,6 @@
       scroll-behavior: smooth;
     }
 
-    /* PAGE THEMES (change with subject) */
-    body.theme-math {
-      background-color: #eef2ff; /* soft indigo */
-    }
-
-    body.theme-physics {
-      background-color: #e0f2fe; /* soft sky blue */
-    }
-
-    body.theme-business {
-      background-color: #ecfdf3; /* soft green */
-    }
-
     /* HEADER / NAV */
 
     header {
@@ -86,20 +73,22 @@
 
     /* HERO */
 
-    .hero {
-      background: linear-gradient(135deg, #4f46e5, #6366f1);
-      color: #fff;
-      padding: 2.5rem 1.5rem 2rem;
-    }
+   .hero {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #fff;
+  padding: 1.6rem 1.5rem 1.4rem;
+}
 
-    .hero-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 2rem;
-      align-items: center;
-    }
+
+ .hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.4rem;
+  align-items: center;
+}
+
 
     @media (max-width: 900px) {
       .hero-inner {
@@ -107,10 +96,11 @@
       }
     }
 
-    .hero h1 {
-      font-size: 2.4rem;
-      margin-bottom: 0.5rem;
-    }
+   .hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
 
     .hero-tagline {
       font-size: 0.95rem;
@@ -708,9 +698,7 @@
       sym2.textContent = data.symbols[1];
       sym3.textContent = data.symbols[2];
 
-      // Update page background theme
-      document.body.classList.remove("theme-math", "theme-physics", "theme-business");
-      document.body.classList.add(data.themeClass);
+  
 
       // Render tutors for this subject
       renderTutors();
@@ -854,3 +842,4 @@
   </script>
 </body>
 </html>
+
