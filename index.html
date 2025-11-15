@@ -75,6 +75,13 @@
       grid-template-columns: 1fr; /* make My bookings full-width */
     }
 
+    body.bookings-mode .hero-box strong::after {
+      content: " • My bookings view";
+      font-weight: 400;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+
     /* HEADER / NAV */
 
     header {
@@ -129,7 +136,7 @@
       box-shadow: 0 0 0 1px rgba(156, 163, 175, 0.6);
     }
 
-    /* HERO (no fade here now) */
+    /* HERO */
 
     .hero {
       background: linear-gradient(135deg, #3d348b, #6366f1);
@@ -200,7 +207,51 @@
       font-size: 1rem;
     }
 
-    /* MAIN LAYOUT (no page-wide fade) */
+    /* TRUST STRIP – “Why parents choose us” */
+
+    .trust-strip {
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .trust-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 800px) {
+      .trust-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .trust-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+      margin-top: 0.1rem;
+    }
+
+    .trust-title {
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .trust-text {
+      color: #6b7280;
+    }
+
+    /* MAIN LAYOUT */
 
     main {
       max-width: 1100px;
@@ -222,9 +273,10 @@
     .muted {
       color: #6b7280;
       font-size: 0.9rem;
+      max-width: 700px;
     }
 
-    /* SUBJECT BAR – we’ll fade this in slightly */
+    /* SUBJECT BAR */
 
     .subject-bar {
       margin-top: 1rem;
@@ -282,7 +334,7 @@
       }
     }
 
-    /* SUBJECT VISUAL AREA – fades in */
+    /* SUBJECT VISUAL AREA */
 
     .subject-panel {
       border-radius: 18px;
@@ -344,7 +396,7 @@
       background: #ffffff;
       border-radius: 18px;
       box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-      padding: 1.3rem;
+      padding: 1.3rem 1.4rem;
     }
 
     .card h3 {
@@ -373,6 +425,7 @@
       padding: 0.9rem;
       transition: box-shadow 0.16s ease, transform 0.12s ease, border-color 0.16s ease;
       animation: fadeUp 0.5s ease-out;
+      background: #f9fafb;
     }
 
     .tutor-card:hover {
@@ -483,6 +536,7 @@
       grid-template-columns: 1.4fr 1fr 0.8fr;
       gap: 0.4rem;
       align-items: center;
+      background: #f9fafb;
     }
 
     @media (max-width: 650px) {
@@ -528,6 +582,47 @@
       font-size: 0.9rem;
       color: #6b7280;
       margin-top: 0.5rem;
+    }
+
+    /* FLOATING WHATSAPP BUTTON */
+
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      z-index: 50;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      background: #22c55e;
+      color: #f9fafb;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(22, 163, 74, 0.5);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+    }
+
+    .whatsapp-fab span.icon {
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .whatsapp-fab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.6);
+      background: #16a34a;
+    }
+
+    @media (max-width: 600px) {
+      .whatsapp-fab {
+        right: 12px;
+        left: 12px;
+        justify-content: center;
+        bottom: 12px;
+      }
     }
 
     /* FOOTER */
@@ -585,6 +680,33 @@
           This demo site stores bookings in Firestore and also in this browser.
           In a real version we’d plug into a full calendar / booking system.
         </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <section class="trust-strip">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <div class="trust-icon">🔒</div>
+        <div>
+          <div class="trust-title">Safe, 1–to–1 lessons</div>
+          <div class="trust-text">All lessons are online on Google Meet – no home visits needed.</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🎯</div>
+        <div>
+          <div class="trust-title">Focused on exam results</div>
+          <div class="trust-text">Past papers, weak topics and exam-style questions every session.</div>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">💬</div>
+        <div>
+          <div class="trust-title">Quick WhatsApp support</div>
+          <div class="trust-text">We confirm every booking personally via WhatsApp within a short time.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -666,6 +788,18 @@
     &copy; <span id="year"></span> <span class="brand">Tutors Connect</span>.
     First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meets.
   </footer>
+
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <!-- Replace the number below with your real WhatsApp number -->
+  <a
+    class="whatsapp-fab"
+    href="https://wa.me/971500000000?text=Hi%20I%27d%20like%20to%20book%20an%20IGCSE%20lesson%20with%20Tutors%20Connect"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="icon">💬</span>
+    <span>WhatsApp us</span>
+  </a>
 
   <!-- Firebase v8 SDK -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
