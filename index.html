@@ -16,10 +16,63 @@
       color: #111827;
       background-color: #f3f4f6;
       line-height: 1.6;
+      transition: background-color 0.25s ease;
     }
 
     html {
       scroll-behavior: smooth;
+    }
+
+    /* ANIMATIONS – only used for subjects + tutors */
+
+    @keyframes fadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatSlow {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%   { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.35); }
+      70%  { box-shadow: 0 0 0 12px rgba(79, 70, 229, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+    }
+
+    /* BOOKING MODE – when My bookings tab is active */
+
+    body.bookings-mode {
+      background-color: #ecfeff; /* soft blue to show mode change */
+    }
+
+    body.bookings-mode .hero {
+      background: linear-gradient(135deg, #0369a1, #0ea5e9);
+    }
+
+    body.bookings-mode .section-title {
+      color: #0f172a;
+    }
+
+    body.bookings-mode #bookings-view {
+      border: 1px solid #0ea5e9;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    }
+
+    body.bookings-mode .step-label {
+      color: #0f172a;
+    }
+
+    body.bookings-mode .app-wrapper {
+      grid-template-columns: 1fr; /* make My bookings full-width */
     }
 
     /* HEADER / NAV */
@@ -61,23 +114,25 @@
       border-radius: 999px;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: background 0.15s ease, color 0.15s ease;
+      transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease;
     }
 
     .nav-tab:hover {
       background: rgba(249, 250, 251, 0.1);
+      transform: translateY(-1px);
     }
 
     .nav-tab-active {
       background: #f9fafb;
       color: #111827;
       font-weight: 600;
+      box-shadow: 0 0 0 1px rgba(156, 163, 175, 0.6);
     }
 
-    /* HERO */
+    /* HERO (no fade here now) */
 
     .hero {
-      background: linear-gradient(135deg, #3d348b, #6366f1); /* updated colour */
+      background: linear-gradient(135deg, #3d348b, #6366f1);
       color: #fff;
       padding: 2.3rem 1.5rem 1.9rem;
     }
@@ -145,7 +200,7 @@
       font-size: 1rem;
     }
 
-    /* MAIN LAYOUT */
+    /* MAIN LAYOUT (no page-wide fade) */
 
     main {
       max-width: 1100px;
@@ -169,7 +224,7 @@
       font-size: 0.9rem;
     }
 
-    /* SUBJECT BAR */
+    /* SUBJECT BAR – we’ll fade this in slightly */
 
     .subject-bar {
       margin-top: 1rem;
@@ -177,6 +232,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
+      animation: fadeUp 0.6s ease-out;
     }
 
     .subject-pill {
@@ -189,7 +245,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
-      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
 
     .subject-pill span.emoji {
@@ -207,6 +263,7 @@
       color: #f9fafb;
       border-color: #4f46e5;
       box-shadow: 0 6px 14px rgba(79, 70, 229, 0.5);
+      animation: pulseGlow 1.4s ease-out;
     }
 
     /* APP WRAPPER */
@@ -225,7 +282,7 @@
       }
     }
 
-    /* SUBJECT VISUAL AREA */
+    /* SUBJECT VISUAL AREA – fades in */
 
     .subject-panel {
       border-radius: 18px;
@@ -234,6 +291,7 @@
       overflow: hidden;
       color: #f9fafb;
       min-height: 210px;
+      animation: fadeUp 0.7s ease-out;
     }
 
     .subject-title {
@@ -259,16 +317,16 @@
       opacity: 0.18;
       font-weight: 600;
       white-space: nowrap;
+      animation: floatSlow 7s ease-in-out infinite;
     }
 
-    .floating-symbol.s1 { top: 18%; left: 60%; }
-    .floating-symbol.s2 { top: 55%; left: 10%; }
-    .floating-symbol.s3 { bottom: 10%; right: 8%; }
+    .floating-symbol.s1 { top: 18%; left: 60%; animation-delay: 0.2s; }
+    .floating-symbol.s2 { top: 55%; left: 10%; animation-delay: 0.8s; }
+    .floating-symbol.s3 { bottom: 10%; right: 8%; animation-delay: 1.4s; }
 
     /* Subject themes */
 
     .subject-math {
-      /* changed from purple to a red that still fits the brand */
       background: radial-gradient(circle at top left, #ef4444, #111827);
     }
 
@@ -314,6 +372,7 @@
       border: 1px solid #e5e7eb;
       padding: 0.9rem;
       transition: box-shadow 0.16s ease, transform 0.12s ease, border-color 0.16s ease;
+      animation: fadeUp 0.5s ease-out;
     }
 
     .tutor-card:hover {
@@ -362,6 +421,11 @@
       transform: translateY(-1px);
       box-shadow: 0 3px 8px rgba(148, 163, 184, 0.7);
       border-color: #4f46e5;
+    }
+
+    .slot-btn:active {
+      transform: translateY(0);
+      box-shadow: none;
     }
 
     /* booked / unavailable slots */
@@ -452,11 +516,12 @@
       background: #fee2e2;
       color: #b91c1c;
       justify-self: flex-end;
-      transition: background 0.12s ease;
+      transition: background 0.12s ease, transform 0.1s ease;
     }
 
     .btn-cancel:hover {
       background: #fecaca;
+      transform: translateY(-1px);
     }
 
     .empty-state {
@@ -517,8 +582,8 @@
         2. Click a time that works for you.<br />
         3. You’ll be taken to a short form (Step 2) to confirm the booking on WhatsApp.<br /><br />
         <span style="font-size:0.85rem; opacity:0.9;">
-          This demo site stores bookings only in your browser for now. A real version
-          would connect to a proper booking system or calendar.
+          This demo site stores bookings in Firestore and also in this browser.
+          In a real version we’d plug into a full calendar / booking system.
         </span>
       </div>
     </div>
@@ -544,15 +609,11 @@
       <button class="subject-pill" data-subject="business">
         <span class="emoji">📊</span> IGCSE Business
       </button>
-      <!-- To add more subjects:
-           1) Add a new button here with data-subject="yourKey"
-           2) Add a subject entry in the JS "subjects" object
-           3) Add tutors for that subject in the "tutors" array -->
     </div>
 
     <div class="app-wrapper">
 
-      <!-- SUBJECT VISUAL PANEL -->
+      <!-- SUBJECT VISUAL PANEL (hidden in My bookings) -->
       <section id="subject-panel" class="subject-panel subject-math">
         <div class="subject-title" id="subject-title">IGCSE Maths</div>
         <div class="subject-subtitle" id="subject-subtitle">
@@ -584,10 +645,10 @@
         </p>
       </section>
 
-      <!-- My bookings view -->
+      <!-- My bookings view (separate-looking screen) -->
       <section id="bookings-view" class="card hidden">
         <h3>My bookings</h3>
-        <small>These bookings are stored only in this browser as a demo.</small>
+        <small>This shows all lessons saved for your child.</small>
 
         <div class="booking-list" id="booking-list">
           <!-- bookings injected here -->
@@ -598,9 +659,6 @@
         </p>
       </section>
 
-      <!-- NOTE: the old "Confirm your booking" form section has been removed.
-           All confirmation now happens on confirm.html (Step 2). -->
-
     </div>
   </main>
 
@@ -609,31 +667,27 @@
     First class free • 200 AED per class after. Lessons held 1-to-1 on Google Meets.
   </footer>
 
-
   <!-- Firebase v8 SDK -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
-<script>
-  // Your Firebase config (from the console)
-  var firebaseConfig = {
-    apiKey: "AIzaSyDvhP_i8wwSC9bbFyrBKphWJ6YG8b-PgUw",
-    authDomain: "tutors-connect-931b5.firebaseapp.com",
-    projectId: "tutors-connect-931b5",
-    storageBucket: "tutors-connect-931b5.firebasestorage.app",
-    messagingSenderId: "811594859986",
-    appId: "1:811594859986:web:cab8552402e62fa4e2340b"
-    // measurementId is optional for this
-  };
+  <script>
+    // Your Firebase config
+    var firebaseConfig = {
+      apiKey: "AIzaSyDvhP_i8wwSC9bbFyrBKphWJ6YG8b-PgUw",
+      authDomain: "tutors-connect-931b5.firebaseapp.com",
+      projectId: "tutors-connect-931b5",
+      storageBucket: "tutors-connect-931b5.firebasestorage.app",
+      messagingSenderId: "811594859986",
+      appId: "1:811594859986:web:cab8552402e62fa4e2340b"
+    };
 
-  // Initialize Firebase + Firestore
-  firebase.initializeApp(firebaseConfig);
-  var db = firebase.firestore();
-</script>
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+  </script>
 
   <script>
     // ---------- CONFIG: SUBJECTS & TUTORS ----------
-    // To change descriptions or add subjects/tutors, edit this section.
 
     const subjects = {
       math: {
@@ -659,8 +713,6 @@
       }
     };
 
-    // To add a tutor, copy one of these objects and change:
-    // name, subject (must match a key above), note, and slots.
     const tutors = [
       {
         name: "Ahmed",
@@ -706,16 +758,13 @@
     let currentSubject = "math";
     let bookings = []; // {id, subject, tutor, slot, price, isFree}
 
-  async function loadBookings() {
-  const snapshot = await db.collection("bookings").get();
-  bookings = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
-}
-
-
-   
+    async function loadBookings() {
+      const snapshot = await db.collection("bookings").get();
+      bookings = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    }
 
     function isSlotBooked(subjectKey, tutorName, slotText) {
       return bookings.some(
@@ -744,6 +793,7 @@
     const tabBookings = document.getElementById("tab-bookings");
     const bookingView = document.getElementById("booking-view");
     const bookingsView = document.getElementById("bookings-view");
+    const subjectBar = document.querySelector(".subject-bar");
 
     // ---------- SUBJECT + TUTOR RENDERING ----------
 
@@ -835,7 +885,6 @@
         tutor: tutor.name,
         slot: slot
       });
-      // Step 2 happens on confirm.html
       window.location.href = `confirm.html?${params.toString()}`;
     }
 
@@ -877,24 +926,24 @@
       });
     }
 
-   async function cancelBooking(id) {
-  // Remove booking from Firestore
-  await db.collection("bookings").doc(id).delete();
+    async function cancelBooking(id) {
+      await db.collection("bookings").doc(id).delete();
+      await loadBookings();
+      renderBookings();
+      renderTutors();
+    }
 
-  // Reload bookings from Firestore
-  await loadBookings();
-  renderBookings();
-  renderTutors(); // refresh slots so cancelled times become available again
-}
-
-
-    // ---------- TAB SWITCHING ----------
+    // ---------- TAB SWITCHING (also hide/show subjects UI) ----------
 
     function showSubjectsView() {
       tabSubjects.classList.add("nav-tab-active");
       tabBookings.classList.remove("nav-tab-active");
       bookingView.classList.remove("hidden");
       bookingsView.classList.add("hidden");
+
+      subjectPanel.classList.remove("hidden");
+      subjectBar.classList.remove("hidden");
+      document.body.classList.remove("bookings-mode");
     }
 
     function showBookingsView() {
@@ -902,6 +951,12 @@
       tabSubjects.classList.remove("nav-tab-active");
       bookingView.classList.add("hidden");
       bookingsView.classList.remove("hidden");
+
+      // Hide subject pills + subject panel so it's a clean "My bookings" screen
+      subjectPanel.classList.add("hidden");
+      subjectBar.classList.add("hidden");
+      document.body.classList.add("bookings-mode");
+
       renderBookings();
     }
 
@@ -910,21 +965,18 @@
 
     // ---------- INIT ----------
 
-   document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-// Load shared bookings from Firestore first, then render
-loadBookings().then(() => {
-  setSubject("math");
-  renderBookings();
-});
+    loadBookings().then(() => {
+      setSubject("math");
+      renderBookings();
+    });
 
-document.querySelectorAll(".subject-pill").forEach(btn => {
-  btn.addEventListener("click", () => {
-    setSubject(btn.dataset.subject);
-  });
-});
-
+    document.querySelectorAll(".subject-pill").forEach(btn => {
+      btn.addEventListener("click", () => {
+        setSubject(btn.dataset.subject);
+      });
+    });
   </script>
 </body>
 </html>
-
